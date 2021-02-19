@@ -33,5 +33,7 @@ int main(){
     swipeRight(b,col);
     for(int i=0;i<col;i++)
         cout << b[i].numero << "\n";
+
+    cout << "Isto e um teste";
     return 0;
 }
