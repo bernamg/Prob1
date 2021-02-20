@@ -24,9 +24,10 @@ int DataReceive(){
             gameBoard.push_back(numTile);
         }
         for (Tile T : gameBoard){
-            cout << T.numero << "\n";
+            cout << T.numero << " ";
         }
         //Mecanicas e algoritmo
+        cout << "\n";
         gameBoard.clear();
     }
     return 1;
