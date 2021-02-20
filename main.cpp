@@ -1,9 +1,7 @@
 #include <iostream>
 #include <vector>
-#include <list>
 using namespace std;
 
-//Number of test cases.
 
 class Tile{
 public:
@@ -11,28 +9,27 @@ public:
     int jaMexeu;
 };
 
-class TestCase{
-public:
-    int sizeBoard;
-    int slides;
-    vector<Tile> gameBoard();
-};
+//TODO: Criar mecanicas e algoritmo, por essa funcao na linha 36 e ver onde guardar resultados
 
-list<TestCase> DataReceive(list<TestCase> &input){          //& comercial
-    TestCase newTest;
+int DataReceive(){
     int testNumber, sizeBoard, slides;
+    vector<Tile> gameBoard;
     Tile numTile;
-    cin >> testNumber; //Numero de testes a efetuar
+    cin >> testNumber;                      //Numero de testes a efetuar
     for (int i=0;i<testNumber;i++){
-        cin >> newTest.sizeBoard;
-        cin >> newTest.slides;
-        for (int j=0;j<newTest.sizeBoard*newTest.sizeBoard;j++){
+        cin >> sizeBoard;
+        cin >> slides;
+        for (int j=0;j<sizeBoard*sizeBoard;j++){
             cin >> numTile.numero;
-            newTest.gameBoard().push_back(numTile);
+            gameBoard.push_back(numTile);
         }
-        input.push_back(newTest);
+        for (Tile T : gameBoard){
+            cout << T.numero << "\n";
+        }
+        //Mecanicas e algoritmo
+        gameBoard.clear();
     }
-    return input;
+    return 1;
 }
 
 
@@ -40,7 +37,6 @@ list<TestCase> DataReceive(list<TestCase> &input){          //& comercial
 /*int swipeRight(struct board *b, int pos){ // começa na direita -> pos=col
     if(pos==0) // ja nao tem elementos para juntar com
         return b[pos].numero;
-
     if(b[pos].numero == swipeRight(b,pos-1)){
         if(b[pos].jaMexeu==0){
             b[pos].numero *=2;
@@ -49,30 +45,19 @@ list<TestCase> DataReceive(list<TestCase> &input){          //& comercial
             b[pos-1].jaMexeu=1;
         }
     }
-
     return b[pos].numero;
 }*/
 
 
 
 int main(){
-    //Lista de Inputs
-    list<TestCase> input;
-    DataReceive(input);
-    auto L = input.begin();
-    /*for (auto const& i: input) {
-        cout << "sizeBoard " <<  i.sizeBoard;
-        cout << "slides " <<  i.slides << "\n";
-
-    }*/
-
+    DataReceive();
     /*
     // Assumir que nao ha 0
     struct board b[3];
     b[0].numero = 2;
     b[1].numero = 2;
     b[2].numero = 4;
-
     int col=3;
     swipeRight(b,col);
     for(int i=0;i<col;i++)
