@@ -1,12 +1,43 @@
 #include <iostream>
+#include <vector>
+#include <list>
 using namespace std;
 
-struct board{
+//Number of test cases.
+
+class Tile{
+public:
     int numero;
     int jaMexeu;
 };
 
-int swipeRight(struct board *b, int pos){ // começa na direita -> pos=col
+class TestCase{
+public:
+    int sizeBoard;
+    int slides;
+    vector<Tile> gameBoard();
+};
+
+list<TestCase> DataReceive(list<TestCase> &input){          //& comercial
+    TestCase newTest;
+    int testNumber, sizeBoard, slides;
+    Tile numTile;
+    cin >> testNumber; //Numero de testes a efetuar
+    for (int i=0;i<testNumber;i++){
+        cin >> newTest.sizeBoard;
+        cin >> newTest.slides;
+        for (int j=0;j<newTest.sizeBoard*newTest.sizeBoard;j++){
+            cin >> numTile.numero;
+            newTest.gameBoard().push_back(numTile);
+        }
+        input.push_back(newTest);
+    }
+    return input;
+}
+
+
+
+/*int swipeRight(struct board *b, int pos){ // começa na direita -> pos=col
     if(pos==0) // ja nao tem elementos para juntar com
         return b[pos].numero;
 
@@ -20,9 +51,22 @@ int swipeRight(struct board *b, int pos){ // começa na direita -> pos=col
     }
 
     return b[pos].numero;
-}
+}*/
+
+
 
 int main(){
+    //Lista de Inputs
+    list<TestCase> input;
+    DataReceive(input);
+    auto L = input.begin();
+    /*for (auto const& i: input) {
+        cout << "sizeBoard " <<  i.sizeBoard;
+        cout << "slides " <<  i.slides << "\n";
+
+    }*/
+
+    /*
     // Assumir que nao ha 0
     struct board b[3];
     b[0].numero = 2;
@@ -33,7 +77,6 @@ int main(){
     swipeRight(b,col);
     for(int i=0;i<col;i++)
         cout << b[i].numero << "\n";
-
-    cout << "Isto e um teste";
+*/
     return 0;
 }
