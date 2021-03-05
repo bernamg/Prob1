@@ -3,7 +3,7 @@
 using namespace std;
 
 
-//TODO: Criar mecanicas e algoritmo, por essa funcao na linha 31 e ver onde guardar resultados
+//TODO: Remvoer prints dos slides e algoritmo
 
 void SlideRight(int offset,vector<int> &gameBoard){
     int changes = offset;
@@ -27,10 +27,10 @@ void SlideRight(int offset,vector<int> &gameBoard){
                 }
             }
         }
-        for (int i : gameBoard){
+       /* for (int i : gameBoard){
             cout << i << " ";
         }
-        cout << "\n";
+        cout << "\n";*/
         offset = offset + changes;
     }
 }
@@ -58,6 +58,38 @@ void SlideLeft(int offset,vector<int> &gameBoard){
                 }
             }
         }
+       /* for (int i : gameBoard){
+            cout << i << " ";
+        }
+        cout << "\n";*/
+        offset = offset + changes;
+    }
+}
+
+void SlideDown(int offset,vector<int> &gameBoard){
+    int changes = offset, salto = offset;
+    int firstPos = (offset*offset) - offset;
+
+    for (int j =0; j<changes;j++) {
+        for (int i = firstPos + j; i >= 0; i-=salto) {
+            for (int k = i - salto; k >= 0; k-=salto) {
+
+                 if (gameBoard[i] == 0 && gameBoard[k] != 0) {
+                     gameBoard[i] = gameBoard[k];
+                     gameBoard[k] = 0;
+                 }
+                 else if (gameBoard[i] != 0 && gameBoard[i] == gameBoard[k]) {
+                     gameBoard[i] = gameBoard[i] * 2;
+                     gameBoard[k] = 0;
+                     break;
+                 }
+                 else if(gameBoard[k] != 0){
+                     break;
+                 }
+
+            }
+
+        }
         for (int i : gameBoard){
             cout << i << " ";
         }
@@ -66,19 +98,17 @@ void SlideLeft(int offset,vector<int> &gameBoard){
     }
 }
 
-void SlideDown(int offset,vector<int> &gameBoard){
-    int changes = offset;
+void SlideUp(int offset,vector<int> &gameBoard){
+    int changes = offset, salto = offset;
+    int lastPos = offset * offset;
     for (int j =0; j<changes;j++) {
-        for (int i = offset- changes; i < offset; i++) {
-            for (int k = i + 1; k < offset; k++) {
-                //cout << "Valor de i:" <<gameBoard[i] << "\t" << gameBoard[k] << "\n";
+        for (int i = j; i < lastPos; i+= salto) {
+            for (int k = i + salto; k < lastPos; k+=salto) {
                 if (gameBoard[i] == 0 && gameBoard[k] != 0) {
                     gameBoard[i] = gameBoard[k];
                     gameBoard[k] = 0;
                 }
                 else if (gameBoard[i] != 0 && gameBoard[i] == gameBoard[k]) {
-                    // cout << gameBoard[i]<< "\t" << gameBoard[k] << "\n";
-                    // cout << "Entrei aqui" << "\n";
                     gameBoard[i] = gameBoard[i] * 2;
                     gameBoard[k] = 0;
                     break;
@@ -86,7 +116,9 @@ void SlideDown(int offset,vector<int> &gameBoard){
                 else if(gameBoard[k] != 0){
                     break;
                 }
+
             }
+
         }
         for (int i : gameBoard){
             cout << i << " ";
@@ -95,7 +127,6 @@ void SlideDown(int offset,vector<int> &gameBoard){
         offset = offset + changes;
     }
 }
-
 
 int DataReceive(){
     int testNumber, sizeBoard, slides, num;
@@ -111,17 +142,17 @@ int DataReceive(){
             gameBoard.push_back(num);
         }
         //------------------------Print----------------------
-        for (int i : gameBoard){
+      /*  for (int i : gameBoard){
             cout << i << " ";
-        }
+        }*/
         //---------------------------------------------------
         //Mecanicas e algoritmo
         cout << "\n";
-        SlideLeft(sizeBoard,gameBoard);
+        SlideUp(sizeBoard,gameBoard);
 
         gameBoard.clear();
         cout << "\n\n";
-        break;
+
     }
     return 1;
 }
