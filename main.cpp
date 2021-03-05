@@ -10,14 +10,11 @@ void SlideRight(int offset,vector<int> &gameBoard){
     for (int j =0; j<changes;j++) {
         for (int i = offset - 1; i >= offset - changes; i--) {
             for (int k = i - 1; k >= offset - changes; k--) {
-                //cout << "Valor de i:" <<gameBoard[i] << "\t" << gameBoard[k] << "\n";
                 if (gameBoard[i] == 0 && gameBoard[k] != 0) {
                     gameBoard[i] = gameBoard[k];
                     gameBoard[k] = 0;
                 }
                 else if (gameBoard[i] != 0 && gameBoard[i] == gameBoard[k]) {
-                    // cout << gameBoard[i]<< "\t" << gameBoard[k] << "\n";
-                    // cout << "Entrei aqui" << "\n";
                     gameBoard[i] = gameBoard[i] * 2;
                     gameBoard[k] = 0;
                     break;
@@ -41,14 +38,11 @@ void SlideLeft(int offset,vector<int> &gameBoard){
     for (int j =0; j<changes;j++) {
         for (int i = offset- changes; i < offset; i++) {
             for (int k = i + 1; k < offset; k++) {
-                //cout << "Valor de i:" <<gameBoard[i] << "\t" << gameBoard[k] << "\n";
                 if (gameBoard[i] == 0 && gameBoard[k] != 0) {
                     gameBoard[i] = gameBoard[k];
                     gameBoard[k] = 0;
                 }
                 else if (gameBoard[i] != 0 && gameBoard[i] == gameBoard[k]) {
-                    // cout << gameBoard[i]<< "\t" << gameBoard[k] << "\n";
-                    // cout << "Entrei aqui" << "\n";
                     gameBoard[i] = gameBoard[i] * 2;
                     gameBoard[k] = 0;
                     break;
@@ -73,7 +67,6 @@ void SlideDown(int offset,vector<int> &gameBoard){
     for (int j =0; j<changes;j++) {
         for (int i = firstPos + j; i >= 0; i-=salto) {
             for (int k = i - salto; k >= 0; k-=salto) {
-
                  if (gameBoard[i] == 0 && gameBoard[k] != 0) {
                      gameBoard[i] = gameBoard[k];
                      gameBoard[k] = 0;
