@@ -1,9 +1,9 @@
 #include <iostream>
 #include <vector>
 using namespace std;
+int maxSlides, sizeBoard;
 
-
-//TODO: Remvoer prints dos slides e algoritmo
+//TODO: Remover prints dos slides e algoritmo
 
 void SlideRight(int offset,vector<int> &gameBoard){
     int changes = offset;
@@ -24,7 +24,7 @@ void SlideRight(int offset,vector<int> &gameBoard){
                 }
             }
         }
-       /* for (int i : gameBoard){
+       /*for (int i : gameBoard){
             cout << i << " ";
         }
         cout << "\n";*/
@@ -52,13 +52,74 @@ void SlideLeft(int offset,vector<int> &gameBoard){
                 }
             }
         }
-       /* for (int i : gameBoard){
+        for (int i : gameBoard){
             cout << i << " ";
         }
-        cout << "\n";*/
+        cout << "\n";
         offset = offset + changes;
     }
 }
+
+/*void Carneiro(int sizeBoard, vector<int> &gameBoard) {
+    //cleanup zeros
+    int i, zero_pos = 0, tmp;
+    int lastpos = sizeBoard * sizeBoard;
+    //contar numero de zeros
+
+    while (gameBoard[zero_pos] == 0 && zero_pos < sizeBoard) {
+        zero_pos++;
+    }
+   // cout << zero_pos << "\n";
+
+    for (i = sizeBoard-1; i > 0; i--) {
+        if (gameBoard[i] == 0) {
+            cout << "ze: " << gameBoard[zero_pos] << "\n";
+            cout << "gameboard[i]:" << gameBoard[i] << "\n";
+            tmp = gameBoard[zero_pos];
+            gameBoard[zero_pos] = 0;
+            gameBoard[i] = tmp;
+            zero_pos++;
+        }
+    }
+    cout << "Linha 82\n";
+    for (int i : gameBoard) {
+        cout << i << " ";
+    }
+    cout << "\n";
+
+    i = sizeBoard - 1;
+    while (i > 0) {
+        if (gameBoard[i] == gameBoard[i - 1]) {
+            gameBoard[i] = 2;
+            gameBoard[i - 1] = 0;
+            i -= 2;
+        } else {
+            i--;
+        }
+    }
+    cout << "Linha 98\n";
+    for (int i : gameBoard) {
+        cout << i << " ";
+    }
+    cout << "\n";
+    zero_pos = 0;
+    while (gameBoard[zero_pos] == 0 && zero_pos < sizeBoard)
+        zero_pos++;
+
+    for (i = sizeBoard - 1; i >= 0; i--) {
+        if (gameBoard[i] == 0) {
+            tmp = gameBoard[zero_pos];
+            gameBoard[zero_pos] = 0;
+            gameBoard[i] = tmp;
+        }
+    }
+
+    cout << "Depois de limpar 0\n";
+    for (int i : gameBoard) {
+        cout << i << " ";
+    }
+    cout << "\n";
+}*/
 
 void SlideDown(int offset,vector<int> &gameBoard){
     int changes = offset, salto = offset;
@@ -121,28 +182,61 @@ void SlideUp(int offset,vector<int> &gameBoard){
     }
 }
 
+bool CheckWin(vector<int> &gameBoard){
+    int contador =0;
+    for(int i =0;i<gameBoard.size();i++){
+        if (gameBoard[i]!=0){
+            contador++;
+        }
+    }
+    if (contador==1){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+int Algoritmo(vector<int> &gameBoard, int nSlides, int sizeBoard){
+    if (CheckWin(gameBoard)){
+        return 1;
+    }
+    if (nSlides > maxSlides){
+        return 0;
+    }
+    SlideRight(sizeBoard,gameBoard);
+
+}
+
+
 int DataReceive(){
-    int testNumber, sizeBoard, slides, num;
+    int testNumber, offset, slides, num;
     vector<int> gameBoard;
     cin >> testNumber;                      //Numero de testes a efetuar
 
 
     for (int i=0;i<testNumber;i++){
-        cin >> sizeBoard;
-        cin >> slides;
-        for (int j=0;j<sizeBoard*sizeBoard;j++){
+        cin >> offset;
+        cin >> maxSlides;
+        for (int j=0;j<offset*offset;j++){
             cin >> num;
             gameBoard.push_back(num);
         }
         //------------------------Print----------------------
-      /*  for (int i : gameBoard){
+        cout << "Board Inicial\n";
+        for (int i : gameBoard){
             cout << i << " ";
-        }*/
+        }
         //---------------------------------------------------
         //Mecanicas e algoritmo
-        cout << "\n";
-        SlideUp(sizeBoard,gameBoard);
 
+        SlideRight(offset,gameBoard);
+
+        cout << "print final\n";
+        for (int i : gameBoard) {
+            cout << i << " ";
+        }
+        cout << "\n";
+        break;
         gameBoard.clear();
         cout << "\n\n";
 
@@ -152,19 +246,7 @@ int DataReceive(){
 
 
 
-/*int swipeRight(struct board *b, int pos){ // começa na direita -> pos=col
-    if(pos==0) // ja nao tem elementos para juntar com
-        return b[pos].numero;
-    if(b[pos].numero == swipeRight(b,pos-1)){
-        if(b[pos].jaMexeu==0){
-            b[pos].numero *=2;
-            b[pos-1].numero =0;
-            b[pos].jaMexeu=1;
-            b[pos-1].jaMexeu=1;
-        }
-    }
-    return b[pos].numero;
-}*/
+
 
 
 
