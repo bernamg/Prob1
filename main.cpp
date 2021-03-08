@@ -1,11 +1,24 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-int maxSlides, sizeBoard;
+int maxSlides, sizeBoard, win;
+int SlideUpRec(vector<int> &gameBoard, int nSlides);
+int SlideLeftRec(vector<int> &gameBoard, int nSlides);
+int SlideRightRec(vector<int> &gameBoard, int nSlides);
+int SlideDownRec(vector<int> &gameBoard, int nSlides);
 
 //TODO: Remover prints dos slides e algoritmo
 
-void SlideRight(int offset,vector<int> &gameBoard){
+void printGameBoard(vector<int> &gameBoard){
+    cout << "Print GameBoard\n";
+    for (int i : gameBoard){
+        cout << i << " ";
+    }
+
+    cout << "\nEnd of Print GameBoard\n\n";
+}
+void SlideRight(vector<int> &gameBoard){
+    int offset = sizeBoard;
     int changes = offset;
     for (int j =0; j<changes;j++) {
         for (int i = offset - 1; i >= offset - changes; i--) {
@@ -24,7 +37,7 @@ void SlideRight(int offset,vector<int> &gameBoard){
                 }
             }
         }
-       /*for (int i : gameBoard){
+      /*  for (int i : gameBoard){
             cout << i << " ";
         }
         cout << "\n";*/
@@ -32,8 +45,8 @@ void SlideRight(int offset,vector<int> &gameBoard){
     }
 }
 
-
-void SlideLeft(int offset,vector<int> &gameBoard){
+void SlideLeft(vector<int> &gameBoard){
+    int offset = sizeBoard;
     int changes = offset;
     for (int j =0; j<changes;j++) {
         for (int i = offset- changes; i < offset; i++) {
@@ -52,10 +65,6 @@ void SlideLeft(int offset,vector<int> &gameBoard){
                 }
             }
         }
-        for (int i : gameBoard){
-            cout << i << " ";
-        }
-        cout << "\n";
         offset = offset + changes;
     }
 }
@@ -121,7 +130,8 @@ void SlideLeft(int offset,vector<int> &gameBoard){
     cout << "\n";
 }*/
 
-void SlideDown(int offset,vector<int> &gameBoard){
+void SlideDown(vector<int> &gameBoard){
+    int offset = sizeBoard;
     int changes = offset, salto = offset;
     int firstPos = (offset*offset) - offset;
 
@@ -144,15 +154,12 @@ void SlideDown(int offset,vector<int> &gameBoard){
             }
 
         }
-        for (int i : gameBoard){
-            cout << i << " ";
-        }
-        cout << "\n";
         offset = offset + changes;
     }
 }
 
-void SlideUp(int offset,vector<int> &gameBoard){
+void SlideUp(vector<int> &gameBoard){
+    int offset = sizeBoard;
     int changes = offset, salto = offset;
     int lastPos = offset * offset;
     for (int j =0; j<changes;j++) {
@@ -174,16 +181,12 @@ void SlideUp(int offset,vector<int> &gameBoard){
             }
 
         }
-        for (int i : gameBoard){
-            cout << i << " ";
-        }
-        cout << "\n";
         offset = offset + changes;
     }
 }
 
 bool CheckWin(vector<int> &gameBoard){
-    int contador =0;
+    int contador = 0;
     for(int i =0;i<gameBoard.size();i++){
         if (gameBoard[i]!=0){
             contador++;
@@ -196,49 +199,155 @@ bool CheckWin(vector<int> &gameBoard){
     }
 }
 
-int Algoritmo(vector<int> &gameBoard, int nSlides, int sizeBoard){
-    if (CheckWin(gameBoard)){
-        return 1;
-    }
-    if (nSlides > maxSlides){
-        return 0;
-    }
-    SlideRight(sizeBoard,gameBoard);
 
+int SlideLeftRec(vector<int> &gameBoard, int nSlides){
+    if (CheckWin(gameBoard)){
+        win = nSlides;
+        return nSlides;
+    }
+    if (nSlides >= maxSlides){
+        return -1;
+    }
+    SlideLeft(gameBoard);
+    nSlides++;
+    //----------------------------------------------------------------------------
+    vector<int> gameBoardR = gameBoard;
+    vector<int> gameBoardL = gameBoard;
+    vector<int> gameBoardU = gameBoard;
+    vector<int> gameBoardD = gameBoard;
+    int res;
+    if(res = SlideRightRec(gameBoardR, nSlides)>=0) return res;
+    if(res = SlideDownRec(gameBoardL, nSlides)>=0) return res;
+    if(res = SlideUpRec(gameBoardU, nSlides)>=0) return res;
+    if(res = SlideLeftRec(gameBoardD, nSlides)>=0) return res;
+
+    return -1;
+}
+
+int SlideDownRec(vector<int> &gameBoard, int nSlides){
+    if (CheckWin(gameBoard)){
+        win = nSlides;
+        return nSlides;
+    }
+    if (nSlides >= maxSlides){
+        return -1;
+    }
+    SlideDown(gameBoard);
+    nSlides++;
+    //----------------------------------------------------------------------------
+    vector<int> gameBoardR = gameBoard;
+    vector<int> gameBoardL = gameBoard;
+    vector<int> gameBoardU = gameBoard;
+    vector<int> gameBoardD = gameBoard;
+    int res;
+    if(res = SlideRightRec(gameBoardR, nSlides)>=0) return res;
+    if(res = SlideDownRec(gameBoardL, nSlides)>=0) return res;
+    if(res = SlideUpRec(gameBoardU, nSlides)>=0) return res;
+    if(res = SlideLeftRec(gameBoardD, nSlides)>=0) return res;
+
+    return -1;
+}
+
+
+int SlideUpRec(vector<int> &gameBoard, int nSlides){
+    if (CheckWin(gameBoard)){
+        win = nSlides;
+        return nSlides;
+    }
+    if (nSlides >= maxSlides){
+        return -1;
+    }
+    SlideUp(gameBoard);
+    nSlides++;
+    //----------------------------------------------------------------------------
+    vector<int> gameBoardR = gameBoard;
+    vector<int> gameBoardL = gameBoard;
+    vector<int> gameBoardU = gameBoard;
+    vector<int> gameBoardD = gameBoard;
+    int res;
+    if(res = SlideRightRec(gameBoardR, nSlides)>=0) return res;
+    if(res = SlideDownRec(gameBoardL, nSlides)>=0) return res;
+    if(res = SlideUpRec(gameBoardU, nSlides)>=0) return res;
+    if(res = SlideLeftRec(gameBoardD, nSlides)>=0) return res;
+
+    return -1;
+}
+
+int SlideRightRec(vector<int> &gameBoard, int nSlides){
+    if (CheckWin(gameBoard)){
+        win = nSlides;
+        return nSlides;
+    }
+    if (nSlides >= maxSlides){
+        return -1;
+    }
+    SlideRight(gameBoard);
+
+    nSlides++;
+    //----------------------------------------------------------------------------
+    vector<int> gameBoardR = gameBoard;
+    vector<int> gameBoardL = gameBoard;
+    vector<int> gameBoardU = gameBoard;
+    vector<int> gameBoardD = gameBoard;
+    int res;
+    if(res = SlideRightRec(gameBoardR, nSlides)>=0) return res;
+    if(res = SlideDownRec(gameBoardL, nSlides)>=0) return res;
+    if(res = SlideUpRec(gameBoardU, nSlides)>=0) return res;
+    if(res = SlideLeftRec(gameBoardD, nSlides)>=0) return res;
+
+    return -1;
+}
+
+int BeginAlgoritmo(vector<int> &gameBoard){
+    vector<int> gameBoardR = gameBoard;
+    vector<int> gameBoardL = gameBoard;
+    vector<int> gameBoardU = gameBoard;
+    vector<int> gameBoardD = gameBoard;
+    int nslides = 0, res;
+    if(res=SlideRightRec(gameBoardR, nslides)>=0) return res;
+    if(res=SlideDownRec(gameBoardD,nslides)>=0) return res;
+    if(res=SlideLeftRec(gameBoardL, nslides)>=0) return res;
+    if(res=SlideUpRec(gameBoardU, nslides)>=0) return res;
+
+    return -1;
 }
 
 
 int DataReceive(){
-    int testNumber, offset, slides, num;
+    int testNumber, slides, num, res;
     vector<int> gameBoard;
     cin >> testNumber;                      //Numero de testes a efetuar
 
 
     for (int i=0;i<testNumber;i++){
-        cin >> offset;
+        cin >> sizeBoard;
         cin >> maxSlides;
-        for (int j=0;j<offset*offset;j++){
+        for (int j=0;j<sizeBoard*sizeBoard;j++){
             cin >> num;
             gameBoard.push_back(num);
         }
         //------------------------Print----------------------
-        cout << "Board Inicial\n";
+        /*cout << "Board Inicial\n";
         for (int i : gameBoard){
             cout << i << " ";
         }
+        cout << "\n\n";*/
         //---------------------------------------------------
         //Mecanicas e algoritmo
+        res = BeginAlgoritmo(gameBoard);
+        if ( res ==-1){
+            cout << "no solution\n";
+        }
+        else{
+            cout << win << "\n";
+        }
 
-        SlideRight(offset,gameBoard);
-
-        cout << "print final\n";
+       /* cout << "print final\n";
         for (int i : gameBoard) {
             cout << i << " ";
         }
-        cout << "\n";
-        break;
+        cout << "\n";*/
         gameBoard.clear();
-        cout << "\n\n";
 
     }
     return 1;
@@ -246,22 +355,7 @@ int DataReceive(){
 
 
 
-
-
-
-
 int main(){
     DataReceive();
-    /*
-    // Assumir que nao ha 0
-    struct board b[3];
-    b[0].numero = 2;
-    b[1].numero = 2;
-    b[2].numero = 4;
-    int col=3;
-    swipeRight(b,col);
-    for(int i=0;i<col;i++)
-        cout << b[i].numero << "\n";
-*/
     return 0;
 }
