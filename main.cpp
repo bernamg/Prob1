@@ -22,6 +22,17 @@ void SlideDownRec(vector<int> &gameBoard, int nSlides);
     }
     return false;
 }*/
+
+
+int countPieces(vector<int> &b1){
+    int i,n=sizeBoard*sizeBoard,np=0;
+    for(i=0;i<n;i++){
+        if(b1[i]>0)
+            np++;
+    }
+    return np;
+}
+
 bool checkEqualBoards(vector<int> &b1, vector<int> &b2){
     int i,n=sizeBoard*sizeBoard;
     for(i=0;i<n;i++)
@@ -170,6 +181,9 @@ void SlideLeftRec(vector<int> &gameBoard, int nSlides){
     if (nSlides >= maxSlides || (win <= nSlides && win>0)){
         return;
     }
+    /*if(nSlides > countPieces(gameBoard)){
+        return;
+    }*/
     prevBoard = gameBoard;
     SlideLeft(gameBoard);
     if(checkEqualBoards(prevBoard, gameBoard)) {
@@ -190,7 +204,6 @@ void SlideLeftRec(vector<int> &gameBoard, int nSlides){
 }
 
 void SlideDownRec(vector<int> &gameBoard, int nSlides){
-
     if (CheckWin(gameBoard)){
         win = nSlides;
         return;
@@ -198,6 +211,7 @@ void SlideDownRec(vector<int> &gameBoard, int nSlides){
     if (nSlides >= maxSlides || (win <= nSlides && win>0)){
         return;
     }
+
     prevBoard = gameBoard;
     SlideDown(gameBoard);
     if(checkEqualBoards(prevBoard, gameBoard)) {
@@ -218,6 +232,7 @@ void SlideDownRec(vector<int> &gameBoard, int nSlides){
 
 
 void SlideUpRec(vector<int> &gameBoard, int nSlides){
+
     if (CheckWin(gameBoard)){
         win = nSlides;
         return;
@@ -225,6 +240,7 @@ void SlideUpRec(vector<int> &gameBoard, int nSlides){
     if (nSlides >= maxSlides || (win <= nSlides && win>0)){
         return;
     }
+
     prevBoard = gameBoard;
     SlideUp(gameBoard);
     if(checkEqualBoards(prevBoard, gameBoard)) {
@@ -250,6 +266,7 @@ void SlideRightRec(vector<int> &gameBoard, int nSlides){
     if (nSlides >= maxSlides || (win <= nSlides && win>0)){
         return;
     }
+
     prevBoard = gameBoard;
     SlideRight(gameBoard);
     if(checkEqualBoards(prevBoard, gameBoard)) {
@@ -305,7 +322,7 @@ int DataReceive(){
         //---------------------------------------------------
         //Mecanicas e algoritmo
         BeginAlgoritmo(gameBoard);
-        if ( win ==-1){
+        if ( win <=0){
             cout << "no solution\n";
         }
         else{
