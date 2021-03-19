@@ -23,7 +23,6 @@ void SlideDownRec(vector<int> &gameBoard, int nSlides);
     return false;
 }*/
 
-
 int countPieces(vector<int> &b1){
     int i,n=sizeBoard*sizeBoard,np=0;
     for(i=0;i<n;i++){
@@ -204,6 +203,7 @@ void SlideLeftRec(vector<int> &gameBoard, int nSlides){
 }
 
 void SlideDownRec(vector<int> &gameBoard, int nSlides){
+
     if (CheckWin(gameBoard)){
         win = nSlides;
         return;
@@ -211,7 +211,7 @@ void SlideDownRec(vector<int> &gameBoard, int nSlides){
     if (nSlides >= maxSlides || (win <= nSlides && win>0)){
         return;
     }
-
+    
     prevBoard = gameBoard;
     SlideDown(gameBoard);
     if(checkEqualBoards(prevBoard, gameBoard)) {
@@ -232,7 +232,6 @@ void SlideDownRec(vector<int> &gameBoard, int nSlides){
 
 
 void SlideUpRec(vector<int> &gameBoard, int nSlides){
-
     if (CheckWin(gameBoard)){
         win = nSlides;
         return;
@@ -240,7 +239,7 @@ void SlideUpRec(vector<int> &gameBoard, int nSlides){
     if (nSlides >= maxSlides || (win <= nSlides && win>0)){
         return;
     }
-
+   
     prevBoard = gameBoard;
     SlideUp(gameBoard);
     if(checkEqualBoards(prevBoard, gameBoard)) {
@@ -266,7 +265,7 @@ void SlideRightRec(vector<int> &gameBoard, int nSlides){
     if (nSlides >= maxSlides || (win <= nSlides && win>0)){
         return;
     }
-
+   
     prevBoard = gameBoard;
     SlideRight(gameBoard);
     if(checkEqualBoards(prevBoard, gameBoard)) {
