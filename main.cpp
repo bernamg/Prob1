@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <math.h>
 using namespace std;
 int maxSlides, sizeBoard, win;
 vector<int> prevBoard;
@@ -32,6 +33,20 @@ int countPieces(vector<int> &b1){
     return np;
 }
 
+bool checkSumPowerOf2(vector<int> &b1){
+    int i,n=sizeBoard*sizeBoard,s=0;
+    for(i=0;i<n;i++){
+        s+=b1[i];
+    }
+    float div = s/2.0;
+    while(floor(div)==div && div>1){
+        div = div/2.0;
+    }
+    if(div==1)
+        return true;
+    return false;
+}
+
 bool checkEqualBoards(vector<int> &b1, vector<int> &b2){
     int i,n=sizeBoard*sizeBoard;
     for(i=0;i<n;i++)
@@ -48,6 +63,7 @@ void printGameBoard(vector<int> &gameBoard){
 
     cout << "\nEnd of Print GameBoard\n\n";
 }
+
 void SlideRight(vector<int> &gameBoard){
     int offset = sizeBoard;
     int changes = offset;
@@ -320,12 +336,16 @@ int DataReceive(){
         cout << "\n\n";*/
         //---------------------------------------------------
         //Mecanicas e algoritmo
-        BeginAlgoritmo(gameBoard);
-        if ( win <=0){
+        if(checkSumPowerOf2(gameBoard)==false){
             cout << "no solution\n";
-        }
-        else{
-            cout << win << "\n";
+        } else {
+            BeginAlgoritmo(gameBoard);
+            if ( win <=0){
+                cout << "no solution\n";
+            }
+            else{
+                cout << win << "\n";
+            }
         }
 
         /* cout << "print final\n";
